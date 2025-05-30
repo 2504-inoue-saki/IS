@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <link href="/css/style.css" rel="stylesheet">
+  <title>ユーザ編集</title>
+</head>
+<body>
+<div class="header-contents">
+  <h1>ユーザ編集画面</h1>
+</div>
+
+<div class="errorMessages" th:if="${not #lists.isEmpty(errorMessages)}">
+  <span th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></span>
+</div>
+
+<div class="main-contents">
+  <form th:action="@{/userEditProcess}" method="post" th:object="${userForm}">
+    <input type="hidden" th:field="*{id}"/>
+
+    <label for="account">アカウント</label>
+    <input type="text" id="account" th:field="*{account}"/> <br/>
+
+    <label for="password">パスワード</label>
+    <input type="password" id="password" th:field="*{password}"/> <br/>
+
+    <label for="checkPassword">パスワード確認用</label>
+    <input type="password" id="checkPassword" th:field="*{checkPassword}"/> <br/>
+
+    <label for="name">名前</label>
+    <input type="text" id="name" th:field="*{name}"/> <br/>
+
+    <label for="branchId">支社名</label>
+    <select id="branchId" th:field="*{branchId}">
+      <option value="0">支社を選択してください</option>
+      <option th:each="branch : ${branches}"
+              th:value="${branch.branchId}"
+              th:text="${branch.branchName}"
+              th:selected="${branch.branchId == userForm.branchId}">
+      </option>
+    </select> <br/>
+
+    <label for="departmentId">部署名</label>
+    <select id="departmentId" th:field="*{departmentId}">
+      <option value="0">部署を選択してください</option>
+      <option th:each="department : ${departments}"
+              th:value="${department.departmentId}"
+              th:text="${department.departmentName}"
+              th:selected="${department.departmentId == userForm.departmentId}">
+      </option>
+    </select> <br/>
+
+    <input type="submit" value="更新">
+  </form>
+</div>
+</body>
+</html>

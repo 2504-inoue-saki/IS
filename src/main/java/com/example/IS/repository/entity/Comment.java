@@ -19,13 +19,13 @@ public class Comment {
     private String text;
 
     @Column
-    private String userId;
+    private int userId;
 
     @Column
-    private String messageId;
+    private int messageId;
 
     @CreatedDate
-    @Column(updatable = false)
+    @Column
     private LocalDateTime createdDate;
 
     @LastModifiedDate

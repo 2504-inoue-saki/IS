@@ -5,11 +5,16 @@ import com.example.IS.service.BranchService;
 import com.example.IS.service.DepartmentService;
 import com.example.IS.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@Controller
 public class UserManageController {
     @Autowired
     UserService userService;
@@ -34,4 +39,12 @@ public class UserManageController {
         //フォワード
         return mav;
     }
+
+    /*
+     * ユーザ復活・停止処理
+     */
+    @PutMapping("/update-isStopped/{id}")
+    public ModelAndView changeStatus() {
+    }
+
 }

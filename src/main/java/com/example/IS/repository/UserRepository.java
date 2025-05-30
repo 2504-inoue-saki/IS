@@ -27,4 +27,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "INNER JOIN Branch b ON u.branchId = b.id " +
             "INNER JOIN Department d ON u.departmentId = d.id")
     public List<Object[]> findAllUser();
+
+
+    /*
+     * ログイン処理
+     */
+    public List<User> findByAccountAndPassword(String account, String password);
 }

@@ -2,6 +2,8 @@ package com.example.IS.service;
 
 import com.example.IS.controller.form.UserForm;
 import com.example.IS.repository.UserRepository;
+import com.example.IS.repository.entity.User;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,4 +44,75 @@ public class UserService {
         }
         return formUsers;
     }
+
+    /*
+     * ユーザー登録処理
+     */
+    public void addUser(UserForm userForm) {
+//        ☆検討//パスワードを暗号化
+//        String encPassword = passwordEncoder.encode(userForm.getPassword());
+//        //暗号化したパスワードでセットし直す
+//        userForm.setPassword(encPassword);
+        //引数の型をForm→Entityに変換するメソッド呼び出し
+        User user = setUserEntity(userForm);
+        //ユーザー情報を登録
+        userRepository.save(user);
+    }
+    //型をForm→Entityに変換するメソッド
+    private User setUserEntity(UserForm reqUser) {
+        User user = new User();
+        user.setId(reqUser.getId());
+        user.setAccount(reqUser.getAccount());
+        user.setPassword(reqUser.getPassword());
+        user.setName(reqUser.getName());
+        user.setBranchId(reqUser.getBranchId());
+        user.setDepartmentId(reqUser.getDepartmentId());
+        //登録時は初期値で0(稼働)になる
+        user.setIsStopped(reqUser.getIsStopped());
+        user.setCreatedDate(reqUser.getCreatedDate());
+        user.setUpdatedDate(reqUser.getUpdatedDate());
+        return user;
+    }
+    /*
+     * ログイン処理
+     */
+    public UserForm findLoginUser(UserForm userForm) {
+        //パスワードの暗号化
+        String encPassword = passwordEncoder.encode(userForm.getPassword());
+        //暗号化したパスワードでセットし直す
+        userForm.setPassword(encPassword);
+        //DBへのselect処理
+        List<User> users = userRepository.findByAccountAndPassword(userForm.getAccount(), userForm.getPassword());
+
+        //引数の型をEntity→Formに変換するメソッド呼び出し
+        List<UserForm> userForms = setUserForm(users);
+        return userForms.get(0);
+    }
+    //型をEntity→Formに変換するメソッド
+    private List<UserForm> setUserForm(List<User> users) {
+        List<UserForm> userForms = new ArrayList<>();
+        for (User value : users) {
+            UserForm userForm = new UserForm();
+            userForm.setId(value.getId());
+            userForm.setAccount(value.getAccount());
+            userForm.setPassword(value.getPassword());
+            userForm.setName(value.getName());
+            userForm.setBranchId(value.getBranchId());
+            userForm.setDepartmentId(value.getDepartmentId());
+            userForm.setIsStopped(value.getIsStopped());
+            userForm.setCreatedDate(value.getCreatedDate());
+            userForm.setUpdatedDate(value.getUpdatedDate());
+            userForms.add(userForm);
+        }
+        return userForms;
+    }
+
+    /*
+     * ユーザ編集画面表示処理
+     */
+    public ??? findEditUser(String id){
+
+    }
+
+
 }

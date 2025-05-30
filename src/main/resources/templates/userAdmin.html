@@ -8,7 +8,7 @@
   <title>ユーザ管理</title>
 </head>
 <body>
-<div class="header-contents" th:each="user : ${users}">
+
   <h1>ユーザ管理</h1>
   <div class="table" >
   <table border="1">
@@ -22,6 +22,7 @@
       <th>ユーザー状態</th>
       <th>ユーザー編集</th>
     </tr>
+    <div class="header-contents" th:each="user : ${users}">
       <tr>
         <td th:text="${user.id}"></td>
         <td th:text="${user.account}"></td>
@@ -30,27 +31,34 @@
         <td th:text="${user.departmentName}"></td>
         <td>
           <form th:action="@{/update-isStopped/{id}(id=${user.id})}" th:method="put">
-            <select th:field="*{isStopped}">
-              <option value="0">稼働</option>
+            <block th:if="${user.isStopped == 0}">
+            <select th:field="${user.isStopped}">
+              <option selected value="0">稼働</option>
               <option value="1"}>停止</option>
             </select>
-            <input type="hidden" name="userName" th:value="${user.name}">
+            </block>
+            <block th:if="${user.isStopped == 1}">
+              <select th:field="${user.isStopped}">
+                <option value="0">稼働</option>
+                <option selected value="1"}>停止</option>
+              </select>
+            </block>
             <input class="update-isStopped-button" type="submit" value="変更" disabled>
           </form>
         </td>
         <td>
-          <a href="/signup">
-            <button type="button">ユーザ編集</button>
-          </a>
+          <form th:action="@{/user/edit/{id}(id=${user.id})}" method="get">
+            <input type="submit" value="ユーザ編集" />
+          </form>
         </td>
       </tr>
-    </c:forEach>
+    </div>
     </tbody>
   </table>
   </div>
   <a href="/signup">
-    <button class="signup-button header-button" type="button">ユーザ登録</button>
+    <button class="signup-button header-button" type="button">新規ユーザ登録</button>
   </a>
-</div>
+
 </body>
 </html>
