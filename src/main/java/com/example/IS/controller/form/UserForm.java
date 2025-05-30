@@ -19,4 +19,7 @@ public class UserForm {
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
     private String checkPassword;
+
+    private String branchName;
+    private String departmentName;
 }
