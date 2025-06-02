@@ -18,29 +18,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column
+    @Column(updatable = false)
     private String account;
 
     @Column
     private String password;
 
-    @Column
+    @Column(updatable = false)
     private String name;
 
-    @Column
+    @Column(updatable = false)
     private int branchId;
 
-    @Column
+    @Column(updatable = false)
     private int departmentId;
 
     @Column
     private int isStopped;
 
-    @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
-    @LastModifiedDate
-    @Column
+    @Column(updatable = false)
     private LocalDateTime updatedDate;
 }

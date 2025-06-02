@@ -6,10 +6,7 @@ import com.example.IS.service.DepartmentService;
 import com.example.IS.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -29,10 +26,10 @@ public class UserManageController {
      * ユーザ管理画面表示処理
      */
     @GetMapping("/userAdmin")
-    public ModelAndView adminView() { // ここを元に戻す
+    public ModelAndView adminView() {
         ModelAndView mav = new ModelAndView();
         // 登録してあるユーザー情報を取得
-        List<UserForm> userData = userService.findUserWithBranchWithDepartment();
+        List<UserForm> userData = userService.findUserDate();
         mav.addObject("users", userData);
         //画面遷移先指定
         mav.setViewName("userAdmin");
@@ -43,8 +40,16 @@ public class UserManageController {
     /*
      * ユーザ復活・停止処理
      */
-    @PutMapping("/update-isStopped/{id}")
-    public ModelAndView changeStatus() {
+    @PutMapping("/switch/{id}")
+    public ModelAndView switchStatus(@PathVariable Integer id,
+                                     @RequestParam(name = "isStopped", required = false) Integer isStopped) {
+        //取得したリクエストをuserにセットする
+        UserForm user = new UserForm();
+        user.setId(id);
+        user.setIsStopped(isStopped);
+        //ユーザー復活停止状態の更新
+        userService.saveUser(user);
+        //ユーザー管理画面へリダイレクト
+        return new ModelAndView("redirect:/userAdmin");
     }
-
 }

@@ -30,24 +30,16 @@
         <td th:text="${user.branchName}"></td>
         <td th:text="${user.departmentName}"></td>
         <td>
-          <form th:action="@{/update-isStopped/{id}(id=${user.id})}" th:method="put">
-            <block th:if="${user.isStopped == 0}">
-            <select th:field="${user.isStopped}">
-              <option selected value="0">稼働</option>
-              <option value="1"}>停止</option>
+          <form th:action="@{/switch/{id}(id=${user.id})}" th:method="put">
+            <select name="isStopped">
+              <option value="0" th:selected="${user.isStopped == 0}">稼働</option>
+              <option value="1" th:selected="${user.isStopped == 1}">停止</option>
             </select>
-            </block>
-            <block th:if="${user.isStopped == 1}">
-              <select th:field="${user.isStopped}">
-                <option value="0">稼働</option>
-                <option selected value="1"}>停止</option>
-              </select>
-            </block>
-            <input class="update-isStopped-button" type="submit" value="変更" disabled>
+            <input type="submit" value="変更">
           </form>
         </td>
         <td>
-          <form th:action="@{/user/edit/{id}(id=${user.id})}" method="get">
+          <form th:action="@{/userEdit/{id}(id=${user.id})}" method="get">
             <input type="submit" value="ユーザ編集" />
           </form>
         </td>

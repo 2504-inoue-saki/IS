@@ -15,41 +15,34 @@
 </div>
 
 <div class="main-contents">
-  <form th:action="@{/userEditProcess}" method="post" th:object="${userForm}">
-    <input type="hidden" th:field="*{id}"/>
-
-    <label for="account">アカウント</label>
-    <input type="text" id="account" th:field="*{account}"/> <br/>
-
-    <label for="password">パスワード</label>
-    <input type="password" id="password" th:field="*{password}"/> <br/>
-
-    <label for="checkPassword">パスワード確認用</label>
-    <input type="password" id="checkPassword" th:field="*{checkPassword}"/> <br/>
-
-    <label for="name">名前</label>
-    <input type="text" id="name" th:field="*{name}"/> <br/>
-
-    <label for="branchId">支社名</label>
-    <select id="branchId" th:field="*{branchId}">
-      <option value="0">支社を選択してください</option>
-      <option th:each="branch : ${branches}"
-              th:value="${branch.branchId}"
-              th:text="${branch.branchName}"
-              th:selected="${branch.branchId == userForm.branchId}">
-      </option>
+  <form th:action="@{/userEdit}" th:method="put" th:object="${editUser}">
+    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{isStopped}">
+    アカウント
+    <input type="text" th:field="*{account}"/> <br/>
+    パスワード
+    <input type="password" th:field="*{password}"/> <br/>
+        パスワード確認用
+    <input type="password" th:field="*{checkPassword}"/> <br/>
+    名前
+    <input type="text" th:field="*{name}"/> <br/>
+    支社名
+    <select th:field="*{branchId}"> <br/>
+      <option value="1">本社</option>
+      <option value="2">A支社</option>
+      <option value="3">B支社</option>
+      <option value="4">C支社</option>
+      <option value="5">D支社</option>
+      <option value="0" selected>支社を選択してください</option>
     </select> <br/>
-
-    <label for="departmentId">部署名</label>
-    <select id="departmentId" th:field="*{departmentId}">
-      <option value="0">部署を選択してください</option>
-      <option th:each="department : ${departments}"
-              th:value="${department.departmentId}"
-              th:text="${department.departmentName}"
-              th:selected="${department.departmentId == userForm.departmentId}">
-      </option>
+    部署名
+    <select th:field="*{departmentId}"> <br/>
+      <option value="1">総務人事部</option>
+      <option value="2">情報管理部</option>
+      <option value="3">営業部</option>
+      <option value="4">技術部</option>
+      <option value="0" selected>部署を選択してください</option>
     </select> <br/>
-
     <input type="submit" value="更新">
   </form>
 </div>

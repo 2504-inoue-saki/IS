@@ -44,7 +44,6 @@ public class UserAddController {
     @PostMapping("/userAdd")
     //リクエストパラメータの取得
     public ModelAndView userAddProcessContent(@ModelAttribute("addUser") UserForm addUser) {
-        ModelAndView mav = new ModelAndView();
 
         //バリデーション
 
@@ -54,9 +53,10 @@ public class UserAddController {
         addUser.setUpdatedDate(addUser.getCreatedDate());
 
         //入力された情報を登録しに行く
-        userService.addUser(addUser);
+        userService.saveUser(addUser);
         //ユーザー管理画面へリダイレクト
-        return new ModelAndView("redirect:userAdmin");
+        return new ModelAndView("redirect:/userAdmin");
     }
+
 }
 

@@ -3,6 +3,7 @@ package com.example.IS.service;
 import com.example.IS.controller.form.UserForm;
 import com.example.IS.repository.UserRepository;
 import com.example.IS.repository.entity.User;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,12 +22,13 @@ public class UserService {
     /*
      * ユーザ管理画面表示処理
      */
-    public List<UserForm> findUserWithBranchWithDepartment() {
+    public List<UserForm> findUserDate() {
         List<Object[]> results = userRepository.findAllUser();
         //List<Object[]>をList<UserForm>に詰め替えるメソッド呼び出し
         List<UserForm> formReturns = setListUserForm(results);
         return formReturns;
     }
+
     //List<Object[]>をList<UserForm>に詰め替えるメソッド
     private List<UserForm> setListUserForm(List<Object[]> results) {
         List<UserForm> formUsers = new ArrayList<>();
@@ -46,16 +48,25 @@ public class UserService {
     }
 
     /*
-     * ユーザー登録処理
+     * ユーザー登録＆編集処理
      */
-    public void addUser(UserForm userForm) {
-//        ☆検討//パスワードを暗号化
-//        String encPassword = passwordEncoder.encode(userForm.getPassword());
-//        //暗号化したパスワードでセットし直す
-//        userForm.setPassword(encPassword);
+    public void saveUser(UserForm userForm) {
+        //パスワードの入力がある場合は暗号化してセットし直す
+        if(!StringUtils.isBlank(userForm.getPassword())){
+            //パスワードを暗号化
+            String encPassword = passwordEncoder.encode(userForm.getPassword());
+            //暗号化したパスワードでセットし直す
+            userForm.setPassword(encPassword);
+        } else {
+            //パスワードの入力ない場合は今のパスワードをDBから取得してセットする
+            //DBへのselect処理
+            User currentUser = userRepository.findById(userForm.getId()).orElse(null);
+            //取得したパスワードをセット
+            userForm.setPassword(currentUser.getPassword());
+        }
         //引数の型をForm→Entityに変換するメソッド呼び出し
         User user = setUserEntity(userForm);
-        //ユーザー情報を登録
+        //ユーザー情報を登録/更新
         userRepository.save(user);
     }
     //型をForm→Entityに変換するメソッド
@@ -67,27 +78,23 @@ public class UserService {
         user.setName(reqUser.getName());
         user.setBranchId(reqUser.getBranchId());
         user.setDepartmentId(reqUser.getDepartmentId());
-        //登録時は初期値で0(稼働)になる
         user.setIsStopped(reqUser.getIsStopped());
         user.setCreatedDate(reqUser.getCreatedDate());
         user.setUpdatedDate(reqUser.getUpdatedDate());
         return user;
     }
+
     /*
      * ログイン処理
      */
     public UserForm findLoginUser(UserForm userForm) {
-        //パスワードの暗号化
-        String encPassword = passwordEncoder.encode(userForm.getPassword());
-        //暗号化したパスワードでセットし直す
-        userForm.setPassword(encPassword);
         //DBへのselect処理
         List<User> users = userRepository.findByAccountAndPassword(userForm.getAccount(), userForm.getPassword());
-
         //引数の型をEntity→Formに変換するメソッド呼び出し
         List<UserForm> userForms = setUserForm(users);
         return userForms.get(0);
     }
+
     //型をEntity→Formに変換するメソッド
     private List<UserForm> setUserForm(List<User> users) {
         List<UserForm> userForms = new ArrayList<>();
@@ -100,8 +107,6 @@ public class UserService {
             userForm.setBranchId(value.getBranchId());
             userForm.setDepartmentId(value.getDepartmentId());
             userForm.setIsStopped(value.getIsStopped());
-            userForm.setCreatedDate(value.getCreatedDate());
-            userForm.setUpdatedDate(value.getUpdatedDate());
             userForms.add(userForm);
         }
         return userForms;
@@ -110,9 +115,14 @@ public class UserService {
     /*
      * ユーザ編集画面表示処理
      */
-    public ??? findEditUser(String id){
-
+    public UserForm findEditUser(Integer id){
+        //DBへのselect処理
+        User user = userRepository.findById(id).orElse(null);
+        //setUserFormメソッドを使いたいがためにリストに入れる
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        //引数の型をEntity→Formに変換するメソッド呼び出し
+        List<UserForm> userForms = setUserForm(users);
+        return userForms.get(0);
     }
-
-
 }
