@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <link href="/css/style.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="/js/userAdmin.js"></script>
+  <script th:src="@{/javaScript/script.js}" charset="utf-8"></script>
   <title>ユーザ管理</title>
 </head>
 <body>
@@ -51,6 +51,5 @@
   <a href="/signup">
     <button class="signup-button header-button" type="button">新規ユーザ登録</button>
   </a>
-
 </body>
 </html>

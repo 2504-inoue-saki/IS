@@ -83,13 +83,37 @@ public class UserService {
         user.setUpdatedDate(reqUser.getUpdatedDate());
         return user;
     }
+    //IDが同じならアカウント名が同じでもOKのやつ
+    public int findId(String account) {
+        //DBへのselect処理
+        User selectedUser = userRepository.findByAccount(account);
+        return selectedUser.getId();
+    }
+
+    /*
+     * アカウント重複チェック
+     */
+    public boolean existCheck(String account){
+        if (userRepository.existsByAccount(account)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /*
      * ログイン処理
      */
     public UserForm findLoginUser(UserForm userForm) {
         //DBへのselect処理
-        List<User> users = userRepository.findByAccountAndPassword(userForm.getAccount(), userForm.getPassword());
+        User selectedUser = userRepository.findByAccount(userForm.getAccount());
+        //リクエストから取得したパスワード(平文)とDBから取得したパスワード(暗号化済み)を比較し、異なった場合はnullを返す
+        if(selectedUser == null || !passwordEncoder.matches(userForm.getPassword(),selectedUser.getPassword())){
+            return null;
+        }
+        //setUserFormメソッドを使いたいがためにリストに入れる
+        List<User> users = new ArrayList<>();
+        users.add(selectedUser);
         //引数の型をEntity→Formに変換するメソッド呼び出し
         List<UserForm> userForms = setUserForm(users);
         return userForms.get(0);
@@ -124,5 +148,12 @@ public class UserService {
         //引数の型をEntity→Formに変換するメソッド呼び出し
         List<UserForm> userForms = setUserForm(users);
         return userForms.get(0);
+    }
+
+    /*
+     * ユーザ復活・停止処理
+     */
+    public void saveIsStopped(UserForm user){
+        userRepository.saveIsStopped(user.getId(), user.getIsStopped());
     }
 }

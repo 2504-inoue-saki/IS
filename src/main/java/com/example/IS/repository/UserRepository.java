@@ -2,18 +2,21 @@ package com.example.IS.repository;
 
 import com.example.IS.repository.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /*
      * ユーザ管理画面表示処理
      */
-    // ユーザを全件取得
     @Query("SELECT " +
             "u.id as id, " +
             "u.account as account, " +
@@ -29,9 +32,21 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "ORDER BY id ASC ")
     public List<Object[]> findAllUser();
 
+    /*
+     * アカウント重複チェック
+     */
+    public boolean existsByAccount(String account);
 
     /*
-     * ログイン処理
+     * ログイン処理＆IDが同じならアカウント名が同じでもOKのやつ
      */
-    public List<User> findByAccountAndPassword(String account, String password);
+    public User findByAccount(String account);
+
+    /*
+     * ユーザ復活・停止処理
+     */
+    @Modifying
+    @Query("UPDATE User u SET u.isStopped = :isStopped, u.updatedDate = CURRENT_TIMESTAMP WHERE u.id = :id")
+    public void saveIsStopped(@Param("id")Integer id, @Param("isStopped")int isStopped);
+
 }

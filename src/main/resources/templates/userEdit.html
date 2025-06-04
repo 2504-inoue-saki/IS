@@ -10,8 +10,8 @@
   <h1>ユーザ編集画面</h1>
 </div>
 
-<div class="errorMessages" th:if="${not #lists.isEmpty(errorMessages)}">
-  <span th:each="errorMessage : ${errorMessages}" th:text="${errorMessage}"></span>
+<div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
+  <span th:text="${errorMessage}"></span>
 </div>
 
 <div class="main-contents">
@@ -45,6 +45,9 @@
     </select> <br/>
     <input type="submit" value="更新">
   </form>
+  <a href="/userAdmin">
+    <button type="button">ユーザー管理画面に戻る</button>
+  </a>
 </div>
 </body>
 </html>

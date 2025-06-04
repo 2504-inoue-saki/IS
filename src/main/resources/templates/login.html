@@ -10,9 +10,9 @@
   <h1>ログイン画面</h1>
 </div>
 
-<!--<div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">-->
-<!--  <span th:text="${errorMessage}"></span>-->
-<!--</div>-->
+<div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
+  <span th:text="${errorMessage}"></span>
+</div>
 
 <div class="main-contents">
   <form th:action="@{/loginProcess}" method="post" th:object="${loginUser}">
@@ -20,7 +20,6 @@
     <input type="text" th:field="*{account}"/> <br />
     パスワード
     <input type="password" th:field="*{password}"/> <br />
-
     <input type="submit" value="ログイン">
   </form>
 </div>

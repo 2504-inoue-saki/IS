@@ -32,7 +32,7 @@ public class UserManageController {
         List<UserForm> userData = userService.findUserDate();
         mav.addObject("users", userData);
         //画面遷移先指定
-        mav.setViewName("userAdmin");
+        mav.setViewName("/userAdmin");
         //フォワード
         return mav;
     }
@@ -48,7 +48,7 @@ public class UserManageController {
         user.setId(id);
         user.setIsStopped(isStopped);
         //ユーザー復活停止状態の更新
-        userService.saveUser(user);
+        userService.saveIsStopped(user);
         //ユーザー管理画面へリダイレクト
         return new ModelAndView("redirect:/userAdmin");
     }
