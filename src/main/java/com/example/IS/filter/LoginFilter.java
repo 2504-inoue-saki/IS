@@ -19,11 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static com.example.IS.constFolder.ErrorMessage.*;
 
-@WebFilter(urlPatterns = {"/"})
 public class LoginFilter implements Filter {
-
-    @Autowired
-    HttpSession session;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -33,16 +29,15 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         HttpServletResponse httpResponse = (HttpServletResponse)response;
 
-        //セッションからログインユーザの獲得
-        UserForm loginUser = (UserForm)session.getAttribute("loginUser");
-
-        //ログインユーザが存在していない場合エラーメッセージ表示→ログイン情報のヌルチェック
-        if (loginUser == null) {
-            session.setAttribute("errorMessages", E0024);
-            new ModelAndView("redirect:/login");
+        //セッションの獲得→trueだとセッションがない場合は作ってくれる
+        HttpSession session = httpRequest.getSession(true);
+        //ログインユーザが存在していない場合→ログイン画面にエラーメッセージ表示
+        if (session.getAttribute("loginUser") == null) {
+            session.setAttribute("filterMessage", E0024);
+            httpResponse.sendRedirect("./login");
         } else {
             // 通常実行
-            chain.doFilter(request, response);
+            chain.doFilter(httpRequest, httpResponse);
         }
     }
 

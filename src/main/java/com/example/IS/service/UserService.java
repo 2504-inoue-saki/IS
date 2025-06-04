@@ -16,8 +16,13 @@ import java.util.List;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    PasswordEncoder passwordEncoder;
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /*
      * ユーザ管理画面表示処理

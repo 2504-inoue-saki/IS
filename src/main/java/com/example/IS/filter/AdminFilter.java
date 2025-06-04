@@ -9,21 +9,15 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import static com.example.IS.constFolder.ErrorMessage.*;
 
-@WebFilter(urlPatterns = {"/userAdmin"})
-public class AuthorityFilter implements Filter {
-
-    @Autowired
-    HttpSession session;
+public class AdminFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -33,16 +27,20 @@ public class AuthorityFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         HttpServletResponse httpResponse = (HttpServletResponse)response;
 
+        //セッションの獲得→trueだとセッションがない場合は作ってくれる
+        HttpSession session = httpRequest.getSession(true);
         //セッションからログインユーザの獲得
-        UserForm loginUser = (UserForm)session.getAttribute("loginUser");
+        Object loginUser = session.getAttribute("loginUser");
+        //型変更
+        UserForm loginUserForm = (UserForm)loginUser;
 
-        //ログインユーザが存在していない場合エラーメッセージ表示→ログイン情報のヌルチェック
-        if (loginUser == null) {
-            session.setAttribute("errorMessages", E0024);
-            new ModelAndView("redirect:/login");
+        //セッション内にログインユーザーがないorそのログインユーザの部署IDが総務人事部(1)でない場合→ホーム画面にエラーメッセージ表示
+        if (loginUser == null || loginUserForm.getDepartmentId() != 1) {
+            session.setAttribute("filterMessage", E0012);
+            httpResponse.sendRedirect("./login");
         } else {
             // 通常実行
-            chain.doFilter(request, response);
+            chain.doFilter(httpRequest, httpResponse);
         }
     }
 
