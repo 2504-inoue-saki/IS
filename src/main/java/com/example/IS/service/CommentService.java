@@ -1,7 +1,11 @@
 package com.example.IS.service;
 
+import com.example.IS.controller.form.CommentForm;
+import com.example.IS.controller.form.MessageForm;
 import com.example.IS.dto.UserComment;
 import com.example.IS.repository.CommentRepository;
+import com.example.IS.repository.entity.Comment;
+import com.example.IS.repository.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,4 +49,26 @@ public class CommentService {
         }
         return comments;
     }
+
+    /*
+     * 返信登録処理（鈴木）
+     */
+    public void addComment(CommentForm commentForm){
+        //型をForm→Entityに変換する用メソッド
+        Comment comment = setComment(commentForm);
+
+        //登録処理
+        commentRepository.save(comment);
+    }
+    private Comment setComment(CommentForm commentForm) {
+        Comment comment = new Comment();
+        comment.setId(commentForm.getId());
+        comment.setText(commentForm.getText());
+        comment.setMessageId(commentForm.getMessageId());
+        comment.setUserId(commentForm.getUserId());
+        comment.setCreatedDate(commentForm.getCreatedDate());
+        comment.setUpdatedDate(commentForm.getUpdatedDate());
+        return comment;
+    }
+
 }

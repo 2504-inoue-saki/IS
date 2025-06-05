@@ -19,7 +19,7 @@ import static com.example.IS.constFolder.ErrorMessage.*;
 public class MessageForm {
     private int id;
 
-    @NotBlank(message = E0006, groups = { NewGroup.class })
+    @NotBlank(message = E0004, groups = { NewGroup.class })
     @Size(max = 30, message = E0009, groups = { NewGroup.class })
     private String title;
 

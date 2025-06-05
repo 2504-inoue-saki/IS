@@ -5,6 +5,8 @@ public class ErrorMessage {
     public static final String E0001 = "アカウントを入力してください";
     public static final String E0002 = "パスワードを入力してください";
     public static final String E0003 = "ログインに失敗しました";
+    public static final String E0004 = "メッセージを入力してください";
+    public static final String E0005 = "500文字以内で入力してください";
     public static final String E0006 = "件名を入力してください";
     public static final String E0007 = "本文を入力してください";
     public static final String E0008 = "カテゴリを入力してください";

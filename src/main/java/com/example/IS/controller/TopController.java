@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +33,8 @@ public class TopController {
     UserService userService;
     @Autowired
     HttpSession session;
+    @Autowired
+    HttpServletRequest request;
 
     /*
      * ホーム画面表示処理
@@ -41,6 +44,20 @@ public class TopController {
                             @RequestParam(name = "end", required = false) LocalDate end,
                             @RequestParam(name = "category", required = false) String category) {
         ModelAndView mav = new ModelAndView();
+        //権利者フィルターの処理
+        //セッションの獲得
+        HttpSession session = request.getSession(true);
+        //セッション内にフィルターメッセージがある時フィルターに引っかかる
+        if (session.getAttribute("filterMessage") != null){
+            //エラーメッセージを入れる用のリストを作っておく
+            List<String> errorMessages = new ArrayList<>();
+            //フィルターメッセージをエラーメッセージ用リストに入れる（List<String>に合わせる）
+            errorMessages.add((String)session.getAttribute("filterMessage"));
+            //セッション内のフィルターメッセージを消す
+            session.removeAttribute("filterMessage");
+            //エラーメッセージが詰まったリストをviewに送る
+            mav.addObject("errorMessages", errorMessages);
+        }
 
         List<UserMessage> contentData = messageService.findMessageWithUserByOrder(start, end, category);
         List<UserComment> commentData = commentService.findAllCommentWithUser();
