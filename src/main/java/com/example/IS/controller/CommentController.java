@@ -14,9 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -75,6 +73,17 @@ public class CommentController {
         commentService.addComment(commentForm);
 
         //ホーム画面へリダイレクト
+        return new ModelAndView("redirect:/");
+    }
+    /*
+     * 返信削除処理
+     */
+    @DeleteMapping("/comment/delete/{id}")
+    public ModelAndView deleteComment(@PathVariable Integer id) {
+
+        // テーブルから投稿を削除
+        commentService.deleteComment(id);
+        // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
 }

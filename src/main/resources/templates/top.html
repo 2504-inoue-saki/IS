@@ -55,7 +55,7 @@
                 <div class="text" th:text="${message.text}">投稿内容</div>
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}"></div>
 
-                <!-- コメント機能 鈴木変更-->
+                <!-- コメント機能 -->
                 <div class="comment-contents">
                     <form th:action="@{/comment}" method="post">
                         <div class="form-area">
@@ -71,13 +71,19 @@
                         <div class="text">
                             返信 : <span th:text="${comment.text}"></span>
                         </div>
+                        <div class="comment-delete-button">
+                            <!--ログインユーザーとメッセージIDが一致していたら表示する 鈴木変更-->
+                            <form th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">
+                                <input type="submit" value="返信の削除"/>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="delete-button">
                 <!--ログインユーザーとメッセージIDが一致していたら表示する 鈴木変更-->
-                <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
-                    <input type="hidden" value="削除"/>
+                <form th:action="@{/message/delete/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
+                    <input type="submit" value="投稿の削除"/>
                 </form>
             </div>
         </div>
