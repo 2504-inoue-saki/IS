@@ -72,7 +72,7 @@
                             返信 : <span th:text="${comment.text}"></span>
                         </div>
                         <div class="comment-delete-button">
-                            <!--ログインユーザーとメッセージIDが一致していたら表示する 鈴木変更-->
+                            <!--ログインユーザーとメッセージIDが一致していたら表示する-->
                             <form th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">
                                 <input type="submit" value="返信の削除"/>
                             </form>
