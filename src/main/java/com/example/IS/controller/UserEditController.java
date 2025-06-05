@@ -76,7 +76,7 @@ public class UserEditController {
         //パスワードの入力がある場合は文字数&半角チェック
         String password = editUser.getPassword();
         if (!StringUtils.isEmpty(password) &&
-                ((password.length() < 6 || password.length() > 20) || password.matches("^[0-9a-zA-Z]$"))){
+                ((password.length() < 6 || password.length() > 20) || password.matches("^[!-~]$"))){
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             errorMessages.add(E0017);
