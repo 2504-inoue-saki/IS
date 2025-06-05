@@ -102,7 +102,7 @@ public class LoginController {
         //チェックに引っかからなければ、ログイン情報を保持＆ホーム画面へリダイレクト
         HttpSession session = request.getSession(true);
         session.setAttribute("loginUser", loginUser);
-        return new ModelAndView("redirect:/userAdmin");
+        return new ModelAndView("redirect:/");
     }
 
     /*
@@ -111,6 +111,11 @@ public class LoginController {
     @PostMapping("/logout")
     public ModelAndView logoutContent() {
         HttpSession session = request.getSession(true);
+        //ログインユーザが存在しない場合→エラーメッセージをホーム画面に表示
+        if (session.getAttribute("loginUser") != null){
+            session.setAttribute("filterMessage", E0025);
+            return new ModelAndView("redirect:/");
+        }
         session.removeAttribute("loginUser");
         return new ModelAndView("redirect:/login");
     }

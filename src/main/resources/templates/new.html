@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <link th:href="@{/css/style.css}" rel="styleSheet">
+  <title>新規投稿</title>
+</head>
+<body>
+<div class="header-contents">
+  <h1>新規投稿画面</h1>
+</div>
+
+<div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
+  <span th:text="${errorMessage}"></span>
+</div>
+
+<div class="main-contents">
+  <form th:action="@{/add}" method="post" th:object="${message}">
+    件名</br>
+    <textarea class="newContent" th:field="*{title}" size="20" maxlength="200" /></textarea><br/>
+    本文</br>
+    <textarea class="newContent" th:field="*{text}" size="20" maxlength="200" /></textarea><br/>
+    カテゴリ</br>
+    <textarea class="newContent" th:field="*{category}" size="20" maxlength="200" /></textarea><br/>
+    <input type="submit" value="登録">
+  </form>
+</div>
+</body>
+</html>

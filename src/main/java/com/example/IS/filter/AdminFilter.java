@@ -37,7 +37,7 @@ public class AdminFilter implements Filter {
         //セッション内にログインユーザーがないorそのログインユーザの部署IDが総務人事部(1)でない場合→ホーム画面にエラーメッセージ表示
         if (loginUser == null || loginUserForm.getDepartmentId() != 1) {
             session.setAttribute("filterMessage", E0012);
-            httpResponse.sendRedirect("./login");
+            httpResponse.sendRedirect("./");
         } else {
             // 通常実行
             chain.doFilter(httpRequest, httpResponse);
