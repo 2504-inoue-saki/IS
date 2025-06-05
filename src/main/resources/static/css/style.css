@@ -125,3 +125,68 @@ label {
 	margin-left: 10px;
 	color: red;
 }
+
+        .form-row {
+            display: flex; /* Flexコンテナにする */
+            align-items: center; /* 垂直方向の中央揃え */
+            margin-bottom: 10px; /* 行間のスペース */
+        }
+
+        .form-row label {
+            margin-right: 5px; /* ラベルと入力欄の間のスペース */
+        }
+
+        .form-row .category-group {
+            display: flex;
+            align-items: center;
+            margin-left: 20px; /* 日付グループとカテゴリーグループの間のスペース */
+        }
+
+        .form-area input[type="submit"] {
+            margin-left: 20px; /* ここで右にずらす量を指定 */
+        }
+        /* メッセージ表示エリアの基本的なスタイル */
+        .message-icon {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .account-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .account {
+            color: #333;
+        }
+        .name {
+            color: #666;
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+        /* エラー表示用のスタイル */
+        .error-container {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px 10px;
+        }
+
+        .error-message {
+            color: red; /* エラーメッセージの色 */
+            font-size: 0.9em; /* 少し小さめのフォントサイズ */
+            margin-bottom: 5px; /* メッセージ間のスペース */
+            list-style: none; /* リストのマークを削除 */
+        }
+
+        /* フォームのフィールドエラーのコンテナ */
+        .form-field-errors {
+            margin-bottom: 10px;
+        }
+
+        /* グローバルエラー（一般的なエラーメッセージ）のコンテナ */
+        .global-errors ul {
+            list-style: none; /* リストのデフォルトのスタイルを削除 */
+            padding: 0; /* デフォルトのパディングを削除 */
+            margin: 0; /* デフォルトのマージンを削除 */
+        }
