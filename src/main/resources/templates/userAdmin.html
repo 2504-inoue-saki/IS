@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <link href="/css/style.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script th:src="@{/javaScript/script.js}" charset="utf-8"></script>
+  <title>ユーザ管理</title>
+</head>
+<body>
+
+  <h1>ユーザ管理</h1>
+  <div class="table" >
+  <table border="1">
+    <tbody>
+    <tr>
+      <th>社員ID</th>
+      <th>アカウント名</th>
+      <th>名前</th>
+      <th>支社</th>
+      <th>部署</th>
+      <th>ユーザー状態</th>
+      <th>ユーザー編集</th>
+    </tr>
+    <div class="header-contents" th:each="user : ${users}">
+      <tr>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.account}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.branchName}"></td>
+        <td th:text="${user.departmentName}"></td>
+        <td>
+          <form th:action="@{/switch/{id}(id=${user.id})}" th:method="put">
+            <select name="isStopped">
+              <option value="0" th:selected="${user.isStopped == 0}">稼働</option>
+              <option value="1" th:selected="${user.isStopped == 1}">停止</option>
+            </select>
+            <input type="submit" value="変更">
+          </form>
+        </td>
+        <td>
+          <form th:action="@{/userEdit/{id}(id=${user.id})}" method="get">
+            <input type="submit" value="ユーザ編集" />
+          </form>
+        </td>
+      </tr>
+    </div>
+    </tbody>
+  </table>
+  </div>
+  <a href="/signup">
+    <button class="signup-button header-button" type="button">新規ユーザ登録</button>
+  </a>
+</body>
+</html>

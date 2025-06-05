@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,6 +25,28 @@ public class MessageService {
     MessageRepository messageRepository;
 
     /*
+     * 新規投稿登録処理（鈴木）
+     */
+    public void addMessage(MessageForm messageForm){
+        //型をForm→Entityに変換する用メソッド
+        Message message = setMessage(messageForm);
+
+        //登録処理
+        messageRepository.save(message);
+    }
+
+    private Message setMessage(MessageForm messageForm) {
+        Message message = new Message();
+        message.setId(messageForm.getId());
+        message.setTitle(messageForm.getTitle());
+        message.setText(messageForm.getText());
+        message.setCategory(messageForm.getCategory());
+        message.setUserId(messageForm.getUserId());
+        message.setCreatedDate(messageForm.getCreatedDate());
+        message.setUpdatedDate(messageForm.getUpdatedDate());
+        return message;
+    }
+        /*
      * レコード絞り込み取得処理
      */
     public List<UserMessage> findMessageWithUserByOrder(LocalDate start, LocalDate end, String category) {
@@ -70,6 +94,7 @@ public class MessageService {
      * DBから取得したデータをFormに設定
      */
     private List<MessageForm> setMessageForm(List<Message> results) {
+
         List<MessageForm> messages = new ArrayList<>();
 
         for (Message value : results) {

@@ -36,11 +36,9 @@ public class User {
     @Column
     private int isStopped;
 
-    @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdDate;
 
-    @LastModifiedDate
     @Column
     private LocalDateTime updatedDate;
 }
