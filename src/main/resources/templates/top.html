@@ -11,7 +11,7 @@
     <form th:action="@{/logout}" method="post">
         <input class="logout-button header-button" type="submit" value="ログアウト"/>
     </form>
-    <form th:action="@{/new}" method="post">
+    <form th:action="@{/new}" method="get">
         <input class="new-button header-button" type="submit" value="新規投稿"/>
     </form>
     <!--    <div th:if="${loginDepartmentId} == '1'">-->
@@ -73,27 +73,23 @@
                             <input type="submit" value="送信"/>
                         </div>
                     </form>
-                    <div class="message-icon" th:each="comment : ${comments}" th:if="${comment.messageId == message.id}">
+                    <div class="message-icon" th:each="comment : ${comments}"
+                         th:if="${comment.messageId == message.id}">
                         <div class="text">
                             返信 : <span th:text="${comment.text}"></span>
-                        </div>
-                        <div class="edit-button">
-                            <a th:href="@{/editComment/{id}(id=${comment.id})}">
-                                <input type="button" value="返信を編集">
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="delete-button">
-                <!--ログインユーザーとメッセージIDが一致していたら表示する-->
-                <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${message.userId == message.userId}">
-                    <input type="submit" value="削除">
+                <!--ログインユーザーとメッセージIDが一致していたら表示する 鈴木変更-->
+                <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
+                    <input type="hidden" value="削除"/>
                 </form>
-            </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="copyright">
     <p>© IS System</p>

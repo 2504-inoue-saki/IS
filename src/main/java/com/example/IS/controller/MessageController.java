@@ -6,7 +6,6 @@ import com.example.IS.groups.NewGroup;
 import com.example.IS.service.MessageService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,10 +13,13 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.IS.constFolder.ErrorMessage.E0023;
 
 @Controller
 public class MessageController {
@@ -36,9 +38,9 @@ public class MessageController {
         HttpSession session = request.getSession(true);
 
         //新規投稿登録処理でエラーがあった際のエラーメッセージ表示処理
-        if (session.getAttribute("errorMessages") != null){
+        if (session.getAttribute("errorMessages") != null) {
             //フィルターメッセージをエラーメッセージ用リストに入れる（List<String>に合わせる）
-            List<String> errorMessages = (List<String>)session.getAttribute("errorMessages");
+            List<String> errorMessages = (List<String>) session.getAttribute("errorMessages");
             session.removeAttribute("errorMessages");
             //エラーメッセージが詰まったリストをviewに送る
             mav.addObject("errorMessages", errorMessages);
@@ -61,12 +63,12 @@ public class MessageController {
         HttpSession session = request.getSession(true);
 
         //リクエストパラメータの必須＆文字数チェック
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
             //要素を1つ取り出してerrorに代入してリストに追加→全ての要素が尽きるまで繰り返す
-            for(FieldError error : result.getFieldErrors()){
+            for (FieldError error : result.getFieldErrors()) {
                 //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
                 errorMessages.add(error.getDefaultMessage());
             }
@@ -89,6 +91,18 @@ public class MessageController {
         messageService.addMessage(messageForm);
 
         //ホーム画面へリダイレクト
+        return new ModelAndView("redirect:/");
+    }
+
+    /*
+     * 投稿削除処理
+     */
+    @DeleteMapping("/message/delete/{id}")
+    public ModelAndView deleteMessage(@PathVariable Integer id) {
+
+        // テーブルから投稿を削除
+        messageService.deleteMessage(id);
+        // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
 }
