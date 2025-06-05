@@ -7,8 +7,10 @@ import com.example.IS.groups.NewGroup;
 import com.example.IS.repository.entity.Comment;
 import com.example.IS.service.CommentService;
 import com.example.IS.service.MessageService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.IS.constFolder.ErrorMessage.*;
 
 @Controller
 public class CommentController {
@@ -39,27 +43,31 @@ public class CommentController {
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession(true);
         CommentForm commentForm = new CommentForm();
+        //エラーメッセージを入れる用のリストを作っておく
+        List<String> errorMessages = new ArrayList<String>();
 
-//        //リクエストパラメータの必須＆文字数チェック
-//        if(result.hasErrors()){
-//            //エラーメッセージを入れる用のリストを作っておく
-//            List<String> errorMessages = new ArrayList<String>();
-//            //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
-//            //要素を1つ取り出してerrorに代入してリストに追加→全ての要素が尽きるまで繰り返す
-//            for(FieldError error : result.getFieldErrors()){
-//                //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
-//                errorMessages.add(error.getDefaultMessage());
-//            }
-//            //エラーメッセージが詰まったセッションを用意
-//            session.setAttribute("errorMessages", errorMessages);
-//            //新規投稿画面へリダイレクト
-//            return new ModelAndView("redirect:/");
-//        }
+        //リクエストパラメータの必須チェック
+        if(StringUtils.isBlank(text)){
+            errorMessages.add(E0004);
+            //エラーメッセージが詰まったセッションを用意
+            session.setAttribute("errorMessages", errorMessages);
+            //ホーム画面へリダイレクト
+            return new ModelAndView("redirect:/");
+        }
+        //リクエストパラメータの文字数チェック
+        if(text.length() > 500){
+            errorMessages.add(E0005);
+            //エラーメッセージが詰まったセッションを用意
+            session.setAttribute("errorMessages", errorMessages);
+            //ホーム画面へリダイレクト
+            return new ModelAndView("redirect:/");
+        }
 
-        //メッセージIDをセット
-        commentForm.setMessageId(messageId);
         //返信内容のテキストをセット
         commentForm.setText(text);
+        //メッセージIDをセット
+        commentForm.setMessageId(messageId);
+
 
         //今の時間をセット
         LocalDateTime now = LocalDateTime.now();
