@@ -39,7 +39,7 @@ public class LoginController {
     public ModelAndView loginContent() {
         ModelAndView mav = new ModelAndView();
 
-        //ログインフィルターの処理→管理者権限も同じだから後でコピペする
+        //ログインフィルターの処理
         //セッションの獲得
         HttpSession session = request.getSession(true);
         //セッション内にフィルターメッセージがある時フィルターに引っかかる
@@ -112,7 +112,7 @@ public class LoginController {
     public ModelAndView logoutContent() {
         HttpSession session = request.getSession(true);
         //ログインユーザが存在しない場合→エラーメッセージをホーム画面に表示
-        if (session.getAttribute("loginUser") != null){
+        if (session.getAttribute("loginUser") == null){
             session.setAttribute("filterMessage", E0025);
             return new ModelAndView("redirect:/");
         }
