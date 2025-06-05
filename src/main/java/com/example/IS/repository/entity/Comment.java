@@ -1,14 +1,17 @@
 package com.example.IS.repository.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "comments")
+@Getter
+@Setter
 public class Comment {
     @Id
     @Column
@@ -19,10 +22,10 @@ public class Comment {
     private String text;
 
     @Column
-    private String userId;
+    private int userId;
 
     @Column
-    private String messageId;
+    private int messageId;
 
     @CreatedDate
     @Column(updatable = false)
