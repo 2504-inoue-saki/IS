@@ -55,6 +55,7 @@ public class CommentController {
 //            //新規投稿画面へリダイレクト
 //            return new ModelAndView("redirect:/");
 //        }
+
         //メッセージIDをセット
         commentForm.setMessageId(messageId);
         //返信内容のテキストをセット
