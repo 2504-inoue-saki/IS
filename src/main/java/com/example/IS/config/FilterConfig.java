@@ -31,7 +31,7 @@ public class FilterConfig {
         bean.setFilter(new AdminFilter());
         //管理者権限が必要なURL
         bean.addUrlPatterns("/userAdmin");
-        bean.addUrlPatterns("/signup");
+//        bean.addUrlPatterns("/signup");
         bean.addUrlPatterns("/userEdit");
         bean.setOrder(2);
         return bean;
