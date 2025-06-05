@@ -19,6 +19,7 @@ public class CommentForm {
     @NotBlank(message = E0004)
     @Size(max = 500, message = E0005)
     private String text;
+
     private int userId;
     private int messageId;
     private LocalDateTime createdDate;
