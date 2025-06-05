@@ -70,5 +70,10 @@ public class CommentService {
         comment.setUpdatedDate(commentForm.getUpdatedDate());
         return comment;
     }
-
+    /*
+     * 返信削除処理（鈴木）
+     */
+    public void deleteComment(Integer id) {
+        commentRepository.deleteById(id);
+    }
 }
