@@ -110,4 +110,11 @@ public class MessageService {
         }
         return messages;
     }
+
+    /*
+     * レコード削除
+     */
+    public void deleteMessage(Integer id) {
+        messageRepository.deleteById(id);
+    }
 }

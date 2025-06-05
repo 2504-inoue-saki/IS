@@ -66,28 +66,23 @@
                             <input type="submit" value="送信"/>
                         </div>
                     </form>
-
-                    <div class="message-icon" th:each="comment : ${comments}" th:if="${comment.messageId == message.id}">
+                    <div class="message-icon" th:each="comment : ${comments}"
+                         th:if="${comment.messageId == message.id}">
                         <div class="text">
                             返信 : <span th:text="${comment.text}"></span>
-                        </div>
-                        <div class="edit-button">
-                            <a th:href="@{/editComment/{id}(id=${comment.id})}">
-                                <input type="button" value="返信を編集">
-                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="delete-button">
-                <!--ログインユーザーのIDとメッセージのユーザIDが一致していたら表示する 鈴木変更-->
+                <!--ログインユーザーとメッセージIDが一致していたら表示する 鈴木変更-->
                 <form th:action="@{/delete/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
-                    <input type="submit" value="削除">
+                    <input type="hidden" value="削除"/>
                 </form>
-            </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="copyright">
     <p>© IS System</p>
