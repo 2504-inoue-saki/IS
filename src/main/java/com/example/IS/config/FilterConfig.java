@@ -21,6 +21,9 @@ public class FilterConfig {
         bean.setFilter(new LoginFilter());
         //ログイン情報が必要なURL
         bean.addUrlPatterns("/");
+        bean.addUrlPatterns("/new");
+        bean.addUrlPatterns("/signup");
+        bean.addUrlPatterns("/userEdit/");
         bean.setOrder(1);
         return bean;
     }
@@ -31,8 +34,8 @@ public class FilterConfig {
         bean.setFilter(new AdminFilter());
         //管理者権限が必要なURL
         bean.addUrlPatterns("/userAdmin");
-//        bean.addUrlPatterns("/signup");
-        bean.addUrlPatterns("/userEdit");
+        bean.addUrlPatterns("/signup");
+        bean.addUrlPatterns("/userEdit/{id}");
         bean.setOrder(2);
         return bean;
     }

@@ -10,8 +10,12 @@ import java.time.LocalDateTime;
 
 public class DepartmentForm {
     private int id;
+
     private String name;
+
     private LocalDateTime createdDate;
+
     private LocalDateTime updatedDate;
+
     private String errorMessage;
 }

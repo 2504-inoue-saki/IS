@@ -51,5 +51,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      */
     @Modifying
     @Query("UPDATE User u SET u.isStopped = :isStopped, u.updatedDate = CURRENT_TIMESTAMP WHERE u.id = :id")
-    public void saveIsStopped(@Param("id")Integer id, @Param("isStopped")int isStopped);
+    public void saveIsStopped(@Param("id") Integer id, @Param("isStopped") int isStopped);
 }

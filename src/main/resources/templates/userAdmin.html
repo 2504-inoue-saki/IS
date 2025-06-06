@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <link href="/css/style.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script th:src="@{/javaScript/script.js}" charset="utf-8"></script>
+  <script th:src="@{/js/confirmation.js}" charset="utf-8"></script>
   <title>ユーザ管理</title>
 </head>
 <body>
 
   <h1>ユーザ管理</h1>
+  <div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
+    <span th:text="${errorMessage}"></span>
+  </div>
   <div class="table" >
   <table border="1">
     <tbody>
@@ -19,8 +22,8 @@
       <th>名前</th>
       <th>支社</th>
       <th>部署</th>
-      <th>ユーザー状態</th>
-      <th>ユーザー編集</th>
+      <th>ユーザ状態</th>
+      <th>ユーザ編集</th>
     </tr>
     <div class="header-contents" th:each="user : ${users}">
       <tr>
@@ -30,13 +33,11 @@
         <td th:text="${user.branchName}"></td>
         <td th:text="${user.departmentName}"></td>
         <td>
-          <form th:action="@{/switch/{id}(id=${user.id})}" th:method="put">
-            <select name="isStopped">
-              <option value="0" th:selected="${user.isStopped == 0}">稼働</option>
-              <option value="1" th:selected="${user.isStopped == 1}">停止</option>
-            </select>
-            <input type="submit" value="変更">
-          </form>
+          <form th:action="@{/switch/{id}(id=${user.id})}" method="post" class="update-isStopped">
+            <input type="hidden" name="_method" value="put" /> <input type="hidden" name="userName" th:value="${user.name}" /> <select name="isStopped" class="select-box"> <option value="0" th:selected="${user.isStopped == 0}">稼働</option>
+            <option value="1" th:selected="${user.isStopped == 1}">停止</option>
+          </select>
+            <input type="submit" value="変更" class="update-isStopped-button" disabled> </form>
         </td>
         <td>
           <form th:action="@{/userEdit/{id}(id=${user.id})}" method="get">
@@ -50,6 +51,10 @@
   </div>
   <a href="/signup">
     <button class="signup-button header-button" type="button">新規ユーザ登録</button>
+  </a>
+  <br>
+  <a href="/">
+      <button type="button">トップ画面に戻る</button>
   </a>
 </body>
 </html>

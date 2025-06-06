@@ -5,7 +5,6 @@ import com.example.IS.groups.LoginGroup;
 import com.example.IS.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +41,11 @@ public class LoginController {
         //セッションの獲得
         HttpSession session = request.getSession(true);
         //セッション内にフィルターメッセージがある時フィルターに引っかかる
-        if (session.getAttribute("filterMessage") != null){
+        if (session.getAttribute("filterMessage") != null) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<>();
             //フィルターメッセージをエラーメッセージ用リストに入れる（List<String>に合わせる）
-            errorMessages.add((String)session.getAttribute("filterMessage"));
+            errorMessages.add((String) session.getAttribute("filterMessage"));
             //セッション内のフィルターメッセージを消す
             session.removeAttribute("filterMessage");
             //エラーメッセージが詰まったリストをviewに送る
@@ -70,12 +68,12 @@ public class LoginController {
         ModelAndView mav = new ModelAndView();
 
         //必須チェック
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<>();
             //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
             //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
-            for(FieldError error : result.getFieldErrors()){
+            for (FieldError error : result.getFieldErrors()) {
                 //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
                 errorMessages.add(error.getDefaultMessage());
             }
@@ -112,7 +110,7 @@ public class LoginController {
     public ModelAndView logoutContent() {
         HttpSession session = request.getSession(true);
         //ログインユーザが存在しない場合→エラーメッセージをホーム画面に表示
-        if (session.getAttribute("loginUser") == null){
+        if (session.getAttribute("loginUser") == null) {
             session.setAttribute("filterMessage", E0025);
             return new ModelAndView("redirect:/");
         }
