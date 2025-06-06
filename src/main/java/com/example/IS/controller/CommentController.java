@@ -1,21 +1,13 @@
 package com.example.IS.controller;
 
 import com.example.IS.controller.form.CommentForm;
-import com.example.IS.controller.form.MessageForm;
 import com.example.IS.controller.form.UserForm;
-import com.example.IS.groups.NewGroup;
-import com.example.IS.repository.entity.Comment;
 import com.example.IS.service.CommentService;
-import com.example.IS.service.MessageService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,7 +39,7 @@ public class CommentController {
         List<String> errorMessages = new ArrayList<String>();
 
         //リクエストパラメータの必須チェック
-        if(StringUtils.isBlank(text)){
+        if (StringUtils.isBlank(text)) {
             errorMessages.add(E0004);
             //エラーメッセージが詰まったセッションを用意
             session.setAttribute("errorMessages", errorMessages);
@@ -55,7 +47,7 @@ public class CommentController {
             return new ModelAndView("redirect:/");
         }
         //リクエストパラメータの文字数チェック
-        if(text.length() > 500){
+        if (text.length() > 500) {
             errorMessages.add(E0005);
             //エラーメッセージが詰まったセッションを用意
             session.setAttribute("errorMessages", errorMessages);
@@ -84,6 +76,7 @@ public class CommentController {
         //ホーム画面へリダイレクト
         return new ModelAndView("redirect:/");
     }
+
     /*
      * 返信削除処理
      */

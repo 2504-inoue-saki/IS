@@ -44,10 +44,14 @@ public class UserForm {
     private int departmentId;
 
     private int isStopped;
+
     private LocalDateTime createdDate;
+
     private LocalDateTime updatedDate;
+
     private String checkPassword;
 
     private String branchName;
+
     private String departmentName;
 }

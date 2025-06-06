@@ -1,10 +1,7 @@
 package com.example.IS.controller.form;
 
-import com.example.IS.groups.AddGroup;
-import com.example.IS.groups.EditGroup;
 import com.example.IS.groups.NewGroup;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +16,7 @@ import static com.example.IS.constFolder.ErrorMessage.*;
 public class MessageForm {
     private int id;
 
-    @NotBlank(message = E0004, groups = { NewGroup.class })
+    @NotBlank(message = E0006, groups = { NewGroup.class })
     @Size(max = 30, message = E0009, groups = { NewGroup.class })
     private String title;
 
@@ -32,6 +29,8 @@ public class MessageForm {
     private String category;
 
     private int userId;
+
     private LocalDateTime createdDate;
+
     private LocalDateTime updatedDate;
 }

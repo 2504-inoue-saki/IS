@@ -1,7 +1,6 @@
 package com.example.IS.controller;
 
 import com.example.IS.controller.form.CommentForm;
-import com.example.IS.controller.form.MessageForm;
 import com.example.IS.dto.UserComment;
 import com.example.IS.dto.UserMessage;
 import com.example.IS.service.*;
@@ -12,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -48,11 +45,11 @@ public class TopController {
         //セッションの獲得
         HttpSession session = request.getSession(true);
         //セッション内にフィルターメッセージがある時フィルターに引っかかる
-        if (session.getAttribute("filterMessage") != null){
+        if (session.getAttribute("filterMessage") != null) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<>();
             //フィルターメッセージをエラーメッセージ用リストに入れる（List<String>に合わせる）
-            errorMessages.add((String)session.getAttribute("filterMessage"));
+            errorMessages.add((String) session.getAttribute("filterMessage"));
             //セッション内のフィルターメッセージを消す
             session.removeAttribute("filterMessage");
             //エラーメッセージが詰まったリストをviewに送る

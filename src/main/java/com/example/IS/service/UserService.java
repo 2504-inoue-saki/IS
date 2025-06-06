@@ -4,7 +4,6 @@ import com.example.IS.controller.form.UserForm;
 import com.example.IS.repository.UserRepository;
 import com.example.IS.repository.entity.User;
 import io.micrometer.common.util.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +29,7 @@ public class UserService {
     public List<UserForm> findUserDate() {
         List<Object[]> results = userRepository.findAllUser();
         //List<Object[]>をList<UserForm>に詰め替えるメソッド呼び出し
-        List<UserForm> formReturns = setListUserForm(results);
-        return formReturns;
+        return setListUserForm(results);
     }
 
     //List<Object[]>をList<UserForm>に詰め替えるメソッド

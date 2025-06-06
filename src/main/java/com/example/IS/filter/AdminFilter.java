@@ -12,8 +12,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 
 import static com.example.IS.constFolder.ErrorMessage.*;
 
@@ -24,15 +22,15 @@ public class AdminFilter implements Filter {
                          FilterChain chain) throws IOException, ServletException {
 
         //ServletRequestをHttpServletRequestに型変更
-        HttpServletRequest httpRequest = (HttpServletRequest)request;
-        HttpServletResponse httpResponse = (HttpServletResponse)response;
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         //セッションの獲得→trueだとセッションがない場合は作ってくれる
         HttpSession session = httpRequest.getSession(true);
         //セッションからログインユーザの獲得
         Object loginUser = session.getAttribute("loginUser");
         //型変更
-        UserForm loginUserForm = (UserForm)loginUser;
+        UserForm loginUserForm = (UserForm) loginUser;
 
         //セッション内にログインユーザーがないorそのログインユーザの部署IDが総務人事部(1)でない場合→ホーム画面にエラーメッセージ表示
         if (loginUser == null || loginUserForm.getDepartmentId() != 1) {
