@@ -23,7 +23,8 @@ public class FilterConfig {
         bean.addUrlPatterns("/");
         bean.addUrlPatterns("/new");
         bean.addUrlPatterns("/signup");
-        bean.addUrlPatterns("/userEdit/");
+        //*で全指定
+        bean.addUrlPatterns("/userEdit/*");
         bean.setOrder(1);
         return bean;
     }
@@ -35,7 +36,7 @@ public class FilterConfig {
         //管理者権限が必要なURL
         bean.addUrlPatterns("/userAdmin");
         bean.addUrlPatterns("/signup");
-        bean.addUrlPatterns("/userEdit/{id}");
+        bean.addUrlPatterns("/userEdit/*");
         bean.setOrder(2);
         return bean;
     }
