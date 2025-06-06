@@ -1,6 +1,5 @@
 package com.example.IS.controller.form;
 
-import com.example.IS.groups.NewGroup;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -21,7 +20,10 @@ public class CommentForm {
     private String text;
 
     private int userId;
+
     private int messageId;
+
     private LocalDateTime createdDate;
+
     private LocalDateTime updatedDate;
 }

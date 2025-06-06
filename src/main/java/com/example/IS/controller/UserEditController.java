@@ -1,13 +1,11 @@
 package com.example.IS.controller;
 
 import com.example.IS.controller.form.UserForm;
-import com.example.IS.groups.AddGroup;
 import com.example.IS.groups.EditGroup;
 import com.example.IS.service.BranchService;
 import com.example.IS.service.DepartmentService;
 import com.example.IS.service.UserService;
 import io.micrometer.common.util.StringUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,12 +53,12 @@ public class UserEditController {
     public ModelAndView editUser(@Validated({EditGroup.class}) @ModelAttribute("editUser") UserForm editUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         //リクエストパラメータの必須＆文字数＆半角文字チェック（パスワード以外）
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             //result.getFieldErrors()はresultの持つ全エラーを要素にしたリスト→型はList<FieldError>
             //要素を1つ取り出してerrorに代入して処理→全ての要素が尽きるまで繰り返す
-            for(FieldError error : result.getFieldErrors()){
+            for (FieldError error : result.getFieldErrors()) {
                 //error.getDefaultMessage()で取得したエラーメッセージをリストに追加
                 errorMessages.add(error.getDefaultMessage());
             }
@@ -76,7 +72,7 @@ public class UserEditController {
         //パスワードの入力がある場合は文字数&半角チェック
         String password = editUser.getPassword();
         if (!StringUtils.isEmpty(password) &&
-                ((password.length() < 6 || password.length() > 20) || password.matches("^[!-~]$"))){
+                ((password.length() < 6 || password.length() > 20) || password.matches("^[!-~]$"))) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             errorMessages.add(E0017);
@@ -88,7 +84,7 @@ public class UserEditController {
         }
 
         //妥当性チェック①パスワードと確認用パスワードが異なる時にエラーメッセージ
-        if (!editUser.getPassword().equals(editUser.getCheckPassword())){
+        if (!editUser.getPassword().equals(editUser.getCheckPassword())) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             errorMessages.add(E0018);
@@ -101,7 +97,7 @@ public class UserEditController {
 
         //妥当性チェック②支社と部署の組み合わせが不正の場合にエラーメッセージ
         //combinationメソッドで組み合わせのチェックをする
-        if (!UserAddController.combination(editUser.getBranchId(), editUser.getDepartmentId())){
+        if (!UserAddController.combination(editUser.getBranchId(), editUser.getDepartmentId())) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             errorMessages.add(E0023);
@@ -113,7 +109,7 @@ public class UserEditController {
         }
 
         //重複チェック→同じアカウント名が存在かつidが異なる場合エラーメッセージ
-        if (userService.existCheck(editUser.getAccount()) && (editUser.getId() != userService.findId(editUser.getAccount()))){
+        if (userService.existCheck(editUser.getAccount()) && (editUser.getId() != userService.findId(editUser.getAccount()))) {
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             errorMessages.add(E0015);
