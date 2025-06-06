@@ -145,6 +145,9 @@ public class UserService {
     public UserForm findEditUser(Integer id){
         //DBへのselect処理
         User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            return null;
+        }
         //setUserFormメソッドを使いたいがためにリストに入れる
         List<User> users = new ArrayList<>();
         users.add(user);
