@@ -54,4 +54,5 @@ public class UserForm {
     private String branchName;
 
     private String departmentName;
+    private String checkId;
 }
