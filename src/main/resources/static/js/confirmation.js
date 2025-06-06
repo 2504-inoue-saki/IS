@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     // 削除ボタン押下時の処理（投稿、コメントのどちらにも適用）
 	$('.delete').on('click', function() {
-		if (confirm($(this).parents('.delete-button').find('input[name="deleteContent"]').val()+ "：\n" + $(this).parents('.delete-button').find('input[name="deleteInfo"]').val() + "\n削除します。よろしいですか?")) {
+		if (confirm("削除します。よろしいですか?")) {
 			return true;
 		}
 		return false;

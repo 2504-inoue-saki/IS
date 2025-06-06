@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class BranchForm {
     private int id;
     private String name;
+
     private LocalDateTime createdDate;
+
     private LocalDateTime updatedDate;
 }
