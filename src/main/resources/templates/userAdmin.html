@@ -10,6 +10,9 @@
 <body>
 
   <h1>ユーザ管理</h1>
+  <div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
+    <span th:text="${errorMessage}"></span>
+  </div>
   <div class="table" >
   <table border="1">
     <tbody>
