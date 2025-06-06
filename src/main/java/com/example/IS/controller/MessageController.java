@@ -34,7 +34,7 @@ public class MessageController {
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession(true);
 
-        //空のメッセージフォームをセット（初期値）
+        //空のメッセージフォームをセット（初期値は空）
         MessageForm messageForm = new MessageForm();
         mav.addObject("message", messageForm);
 
@@ -50,8 +50,10 @@ public class MessageController {
             MessageForm errorMessageForm = (MessageForm)session.getAttribute("message");
             //セッションから削除
             session.removeAttribute("message");
+            //上書き
             mav.addObject("message", errorMessageForm);
         }
+        
         // 画面遷移先を指定
         mav.setViewName("/new");
         return mav;
