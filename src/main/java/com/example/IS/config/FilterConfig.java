@@ -23,7 +23,7 @@ public class FilterConfig {
         bean.addUrlPatterns("/");
         bean.addUrlPatterns("/new");
         bean.addUrlPatterns("/signup");
-        bean.addUrlPatterns("/userEdit/");
+        bean.addUrlPatterns("/userEdit/{id}");
         bean.setOrder(1);
         return bean;
     }
