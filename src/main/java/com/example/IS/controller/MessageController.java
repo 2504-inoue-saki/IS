@@ -47,8 +47,8 @@ public class MessageController {
             //エラーメッセージが詰まったリストをviewに送る
             mav.addObject("errorMessages", errorMessages);
 
+            //入力保持
             MessageForm errorMessageForm = (MessageForm)session.getAttribute("message");
-            //セッションから削除
             session.removeAttribute("message");
             //上書き
             mav.addObject("message", errorMessageForm);
@@ -81,10 +81,9 @@ public class MessageController {
             //エラーメッセージが詰まったセッションを用意
             session.setAttribute("errorMessages", errorMessages);
             session.setAttribute("message", messageForm);
-            //新規投稿画面へリダイレクト（何でリダイレクトなの？）
+            //新規投稿画面へリダイレクト
             return new ModelAndView("redirect:/new");
 
-//            下は確認用（鈴木）
 //            mav.addObject("errorMessages", errorMessages);
 //            mav.setViewName("/new");
 //            return mav;
