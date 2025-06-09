@@ -29,7 +29,8 @@ public class LoginFilter implements Filter {
         //ログインユーザが存在していない場合→ログイン画面にエラーメッセージ表示
         if (session.getAttribute("loginUser") == null) {
             session.setAttribute("filterMessage", E0024);
-            httpResponse.sendRedirect("./login");
+            //[./]だとカレントパスだから現在地からになる（鈴木）
+            httpResponse.sendRedirect("/login");
         } else {
             // 通常実行
             chain.doFilter(httpRequest, httpResponse);

@@ -34,17 +34,26 @@ public class MessageController {
         ModelAndView mav = new ModelAndView();
         HttpSession session = request.getSession(true);
 
-        //新規投稿登録処理でエラーがあった際のエラーメッセージ表示処理
+        //空のメッセージフォームをセット（初期値は空）
+        MessageForm messageForm = new MessageForm();
+        mav.addObject("message", messageForm);
+
+        //新規投稿登録処理でエラーがあった際のエラーメッセージ表示処理＆入力内容保持
         if (session.getAttribute("errorMessages") != null) {
-            //フィルターメッセージをエラーメッセージ用リストに入れる（List<String>に合わせる）
+            //もってきたエラーメッセージをエラーメッセージ用リストに入れる（List<String>に合わせる）
             List<String> errorMessages = (List<String>) session.getAttribute("errorMessages");
+            //セッションからエラーメッセージを削除
             session.removeAttribute("errorMessages");
             //エラーメッセージが詰まったリストをviewに送る
             mav.addObject("errorMessages", errorMessages);
+
+            //入力保持
+            MessageForm errorMessageForm = (MessageForm)session.getAttribute("message");
+            session.removeAttribute("message");
+            //上書き
+            mav.addObject("message", errorMessageForm);
         }
-        //空のメッセージフォームをセット
-        MessageForm messageForm = new MessageForm();
-        mav.addObject("message", messageForm);
+        
         // 画面遷移先を指定
         mav.setViewName("/new");
         return mav;
@@ -71,8 +80,13 @@ public class MessageController {
             }
             //エラーメッセージが詰まったセッションを用意
             session.setAttribute("errorMessages", errorMessages);
+            session.setAttribute("message", messageForm);
             //新規投稿画面へリダイレクト
             return new ModelAndView("redirect:/new");
+
+//            mav.addObject("errorMessages", errorMessages);
+//            mav.setViewName("/new");
+//            return mav;
         }
 
         //今の時間をセット

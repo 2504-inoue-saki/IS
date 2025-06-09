@@ -41,13 +41,26 @@ public class UserEditController {
     /*
      * ユーザ編集画面表示処理
      */
-    @GetMapping("/userEdit/{id}")
-    public ModelAndView editUser(@PathVariable int id) {
+    //マッピングを複数与える方法
+    @GetMapping({"/userEdit/{checkId}", "/userEdit/"})
+    //PathVariableはリクエストが必須 → required = falseで必須キャンセルしてる → だから/userEdit/が来ても怒られなくなる
+    public ModelAndView editUser(@PathVariable(required = false) String checkId) {
         ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession(true);
+        if(StringUtils.isBlank(checkId) || !checkId.matches("^[0-9]*$")) {
+            //エラーメッセージを入れる用のリストを作っておく
+            List<String> errorMessages = new ArrayList<String>();
+            errorMessages.add(E0025);
+            //エラーメッセージが詰まったセッションを用意
+            session.setAttribute("errorMessages", errorMessages);
+            //ユーザ管理画面へリダイレクト
+            return new ModelAndView("redirect:/userAdmin");
+        }
+
+        int id = Integer.parseInt(checkId);
         UserForm editUser = userService.findEditUser(id);
 
         if(editUser == null){
-            HttpSession session = request.getSession(true);
             //エラーメッセージを入れる用のリストを作っておく
             List<String> errorMessages = new ArrayList<String>();
             errorMessages.add(E0025);
@@ -136,4 +149,3 @@ public class UserEditController {
     }
 
 }
-
