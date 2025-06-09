@@ -9,11 +9,11 @@
 </head>
 <body>
 
-  <h1>ユーザ管理</h1>
-  <div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
-    <span th:text="${errorMessage}"></span>
-  </div>
-  <div class="table" >
+<h1>ユーザ管理</h1>
+<div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
+  <span th:text="${errorMessage}"></span>
+</div>
+<div class="table" >
   <table border="1">
     <tbody>
     <tr>
@@ -40,7 +40,7 @@
             <input type="submit" value="変更" class="update-isStopped-button" disabled> </form>
         </td>
         <td>
-          <form th:action="@{/userEdit/{id}(id=${user.id})}" method="get">
+          <form th:action="@{/userEdit/{checkId}(checkId=${user.id})}" method="get">
             <input type="submit" value="ユーザ編集" />
           </form>
         </td>
@@ -48,13 +48,13 @@
     </div>
     </tbody>
   </table>
-  </div>
-  <a href="/signup">
-    <button class="signup-button header-button" type="button">新規ユーザ登録</button>
-  </a>
-  <br>
-  <a href="/">
-      <button type="button">トップ画面に戻る</button>
-  </a>
+</div>
+<a href="/signup">
+  <button class="signup-button header-button" type="button">新規ユーザ登録</button>
+</a>
+<br>
+<a href="/">
+  <button type="button">トップ画面に戻る</button>
+</a>
 </body>
 </html>
