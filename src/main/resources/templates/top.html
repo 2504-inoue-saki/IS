@@ -8,25 +8,12 @@
     <script th:src="@{/js/confirmation.js}" charset="utf-8"></script>
 </head>
 <body>
-<div class="header-contents">
-    <h1>掲示板</h1>
-    <form th:action="@{/logout}" method="post">
-        <input class="logout-button header-button" type="submit" value="ログアウト"/>
-    </form>
-    <form th:action="@{/new}" method="get">
-        <input class="new-button header-button" type="submit" value="新規投稿"/>
-    </form>
-    <!--    <div th:if="${loginDepartmentId} == '1'">-->
-    <a th:href="@{/userAdmin}">
-        <button class="admin-button header-button" type="button">ユーザ管理</button>
-    </a>
-</div>
+<header th:replace="~{fragments/header :: commonHeader('掲示板', true)}"></header>
 <div class="main-contents">
     <div class="form-area">
         <form action="./" method="get">
             <div class="form-row">
-                日付：<input type="date" name="start" th:value="${start}">～<input type="date" name="end"
-                                                                                 th:value="${end}">
+                日付：<input type="date" name="start" th:value="${start}">～<input type="date" name="end" th:value="${end}">
 
                 <div class="category-group">
                     <label for="category">カテゴリー：</label>
@@ -53,15 +40,17 @@
                 </div>
                 <div>件名：&nbsp;<span class="title" id="MessageTitle" th:text="${message.title}"></span></div>
                 <div>カテゴリー：&nbsp;<span class="category-value" id="MessageCategory" th:text="${message.category}"></span></div>
-                <div class="text" th:text="${message.text}">投稿内容</div>
+                <div class="text" style="white-space: pre-wrap;" th:text="${message.text}">投稿内容</div>
+                <br>
                 <div class="date" th:text="${#temporals.format(message.createdDate, 'yyyy/MM/dd HH:mm')}"></div>
 
                 <!-- コメント機能 -->
+                <br>
                 <div class="comment-contents">
                     <form th:action="@{/comment}" method="post">
                         <div class="form-area">
                             <label>返信内容</label>
-                            <textarea class="tweet-box" name="commentText" maxlength="500"></textarea><br/>
+                            <textarea class="tweet-box" name="commentText"></textarea><br/>
                             <!-- メッセージのIDをコメントformのメッセージIDに格納-->
                             <input type="hidden" th:value="${message.id}" name="messageId"/>
                             <input type="submit" value="送信"/>
@@ -74,7 +63,7 @@
                             <span class="name" th:text="'@' + ${comment.account}">@account</span>
                         </div>
                         <div class="text">
-                            返信 : <span th:text="${comment.text}"></span>
+                            <span th:text="${comment.text}" style="white-space: pre-wrap;"></span>
                         </div>
                         <div class="delete-button">
                             <!--ログインユーザーとメッセージIDが一致していたら表示する-->

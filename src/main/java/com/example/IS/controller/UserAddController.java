@@ -35,6 +35,11 @@ public class UserAddController {
         //空のインスタンスを用意しておく
         UserForm addUser = new UserForm();
         mav.addObject("addUser", addUser);
+
+        // ヘッダー表示処理（井上追加）
+        // ログアウトボタンを表示する
+        mav.addObject("isLoginPage", false);
+
         mav.setViewName("/userAdd");
         return mav;
     }

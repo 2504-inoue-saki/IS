@@ -6,9 +6,7 @@
   <title>ログイン</title>
 </head>
 <body>
-<div class="header-contents">
-  <h1>ログイン画面</h1>
-</div>
+<header th:replace="~{fragments/header :: commonHeader('ログイン', false)}"></header>
 
 <div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
   <span th:text="${errorMessage}"></span>

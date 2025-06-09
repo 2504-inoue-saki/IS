@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+</head>
+<body>
+
+<div th:fragment="commonHeader(pageTitle, showNewPostAndAdminButtons)" class="header-contents">
+    <h1 th:text="${pageTitle}">デフォルトタイトル</h1>
+    <div class="header-buttons">
+
+        <!-- 新規投稿ボタン・ユーザ管理ボタンはトップ画面でのみ表示 -->
+        <th:block th:if="${showNewPostAndAdminButtons}">
+            <form th:action="@{/new}" method="get">
+                <input class="new-button header-button" type="submit" value="新規投稿"/>
+            </form>
+            <a th:href="@{/userAdmin}">
+                <button class="admin-button header-button" type="button">ユーザ管理</button>
+            </a>
+        </th:block>
+
+        <!-- ログアウトボタンはログイン画面以外のすべての画面で表示 -->
+        <form th:if="${!isLoginPage}" th:action="@{/logout}" method="post">
+            <input class="logout-button header-button" type="submit" value="ログアウト"/>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

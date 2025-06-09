@@ -6,9 +6,7 @@
   <title>ユーザ編集</title>
 </head>
 <body>
-<div class="header-contents">
-  <h1>ユーザ編集画面</h1>
-</div>
+<header th:replace="~{fragments/header :: commonHeader('ユーザ編集画面', false)}"></header>
 
 <div class="errorMessages" th:each="errorMessage : ${errorMessages}" th:if="${errorMessages != null}">
   <span th:text="${errorMessage}"></span>
