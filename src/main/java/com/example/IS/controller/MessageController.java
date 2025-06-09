@@ -53,6 +53,10 @@ public class MessageController {
             //上書き
             mav.addObject("message", errorMessageForm);
         }
+
+        // ヘッダー表示処理（井上追加）
+        // ログアウトボタンを表示する
+        mav.addObject("isLoginPage", false);
         
         // 画面遷移先を指定
         mav.setViewName("/new");

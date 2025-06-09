@@ -72,6 +72,11 @@ public class UserEditController {
 
         mav.addObject("editUser", editUser);
         mav.setViewName("userEdit");
+
+        // ヘッダー表示処理（井上追加）
+        // ログアウトボタンを表示する
+        mav.addObject("isLoginPage", false);
+
         return mav;
     }
 
