@@ -80,10 +80,6 @@ a.profile .account {
 	float: left;
 }
 
-.message-icon .text {
-	height: 40px;
-}
-
 .message-icon .message {
 	margin-left: 60px;
 }
@@ -183,4 +179,11 @@ label {
 /* フォームのフィールドエラーのコンテナ */
 .form-field-errors {
     margin-bottom: 10px;
+}
+
+/* 新規投稿画面のテキストエリア */
+.newContent {
+    width: 100%; /* 親要素の幅いっぱいに広げる */
+    height: 100px; /* 高さを100ピクセルに設定 */
+    box-sizing: border-box; /* paddingとborderをwidth/heightに含める */
 }

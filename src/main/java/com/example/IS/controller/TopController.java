@@ -77,6 +77,7 @@ public class TopController {
         mav.addObject("commentForm", new CommentForm());
         mav.addObject("start", start);
         mav.addObject("end", end);
+        mav.addObject("category", category);
 
         return mav;
     }
