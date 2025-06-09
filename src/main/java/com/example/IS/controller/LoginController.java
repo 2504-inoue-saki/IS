@@ -97,10 +97,10 @@ public class LoginController {
             mav.setViewName("/login");
             return mav;
         }
-        //チェックに引っかからなければ、ログイン情報を保持＆ホーム画面へリダイレクト
+        //チェックに引っかからなければ、ログイン情報を保持＆ホーム画面へリダイレクト(旭)
         HttpSession session = request.getSession(true);
         session.setAttribute("loginUser", loginUser);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/IS/");
     }
 
     /*
@@ -109,10 +109,10 @@ public class LoginController {
     @PostMapping("/logout")
     public ModelAndView logoutContent() {
         HttpSession session = request.getSession(true);
-        //ログインユーザが存在しない場合→エラーメッセージをホーム画面に表示
+        //ログインユーザが存在しない場合→エラーメッセージをホーム画面に表示(旭)
         if (session.getAttribute("loginUser") == null) {
             session.setAttribute("filterMessage", E0025);
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/IS/");
         }
         session.removeAttribute("loginUser");
         return new ModelAndView("redirect:/login");
