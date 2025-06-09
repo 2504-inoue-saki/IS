@@ -8,18 +8,7 @@
     <script th:src="@{/js/confirmation.js}" charset="utf-8"></script>
 </head>
 <body>
-<div class="header-contents">
-    <h1>掲示板</h1>
-    <form th:action="@{/logout}" method="post">
-        <input class="logout-button header-button" type="submit" value="ログアウト"/>
-    </form>
-    <form th:action="@{/new}" method="get">
-        <input class="new-button header-button" type="submit" value="新規投稿"/>
-    </form>
-    <a th:href="@{/userAdmin}">
-        <button class="admin-button header-button" type="button">ユーザ管理</button>
-    </a>
-</div>
+<header th:replace="~{fragments/header :: commonHeader('掲示板', true)}"></header>
 <div class="main-contents">
     <div class="form-area">
         <form action="./" method="get">

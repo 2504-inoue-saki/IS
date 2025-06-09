@@ -54,6 +54,11 @@ public class LoginController {
         //空のloginUserをviewに送る
         UserForm loginUser = new UserForm();
         mav.addObject("loginUser", loginUser);
+
+        // ヘッダー表示処理（井上追加）
+        // ログイン画面なので、ログアウトボタンは非表示にする
+        mav.addObject("isLoginPage", true);
+
         // 画面遷移先を指定
         mav.setViewName("/login");
         return mav;

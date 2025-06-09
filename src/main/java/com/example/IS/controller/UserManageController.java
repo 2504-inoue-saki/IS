@@ -46,6 +46,11 @@ public class UserManageController {
         // 登録してあるユーザー情報を取得
         List<UserForm> userData = userService.findUserDate();
         mav.addObject("users", userData);
+
+        // ヘッダー表示処理（井上追加）
+        // ログアウトボタンを表示する
+        mav.addObject("isLoginPage", false);
+
         //画面遷移先指定
         mav.setViewName("/userAdmin");
         //フォワード

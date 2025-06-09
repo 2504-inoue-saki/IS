@@ -69,6 +69,11 @@ public class TopController {
             mav.addObject("errorMessages", errorMessage);
             session.removeAttribute("errorMessages");
         }
+
+        // ヘッダー表示処理（井上追加）
+        // ログアウトボタンを表示する
+        mav.addObject("isLoginPage", false);
+
         // 画面遷移先を指定 「現在のURL」/top へ画面遷移
         mav.setViewName("/top");
         // 投稿データオブジェクトを先ほどのcontentDataをModelAndView型の変数mavへ格納
