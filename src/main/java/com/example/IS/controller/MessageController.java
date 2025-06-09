@@ -105,8 +105,8 @@ public class MessageController {
         // 入力された情報を登録しに行く
         messageService.addMessage(messageForm);
 
-        //ホーム画面へリダイレクト
-        return new ModelAndView("redirect:/");
+        //ホーム画面へリダイレクト(旭)
+        return new ModelAndView("redirect:/IS/");
     }
 
     /*
@@ -117,7 +117,7 @@ public class MessageController {
 
         // テーブルから投稿を削除
         messageService.deleteMessage(id);
-        // rootへリダイレクト
-        return new ModelAndView("redirect:/");
+        // rootへリダイレクト(旭)
+        return new ModelAndView("redirect:/IS/");
     }
 }

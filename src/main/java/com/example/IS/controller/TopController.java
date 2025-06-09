@@ -36,7 +36,8 @@ public class TopController {
     /*
      * ホーム画面表示処理
      */
-    @GetMapping("/")
+//    (旭)
+    @GetMapping("/IS/")
     public ModelAndView top(@RequestParam(name = "start", required = false) LocalDate start,
                             @RequestParam(name = "end", required = false) LocalDate end,
                             @RequestParam(name = "category", required = false) String category) {

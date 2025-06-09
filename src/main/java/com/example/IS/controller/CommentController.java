@@ -44,7 +44,7 @@ public class CommentController {
             //エラーメッセージが詰まったセッションを用意
             session.setAttribute("errorMessages", errorMessages);
             //ホーム画面へリダイレクト
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/IS/");
         }
         //リクエストパラメータの文字数チェック
         if (text.length() > 500) {
@@ -52,7 +52,7 @@ public class CommentController {
             //エラーメッセージが詰まったセッションを用意
             session.setAttribute("errorMessages", errorMessages);
             //ホーム画面へリダイレクト
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/IS/");
         }
 
         //返信内容のテキストをセット
@@ -73,7 +73,7 @@ public class CommentController {
         commentService.addComment(commentForm);
 
         //ホーム画面へリダイレクト
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/IS/");
     }
 
     /*
@@ -85,6 +85,6 @@ public class CommentController {
         // テーブルから投稿を削除
         commentService.deleteComment(id);
         // rootへリダイレクト
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/IS/");
     }
 }
