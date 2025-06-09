@@ -60,7 +60,6 @@ public class CommentController {
         //メッセージIDをセット
         commentForm.setMessageId(messageId);
 
-
         //今の時間をセット
         LocalDateTime now = LocalDateTime.now();
         commentForm.setCreatedDate(now);
