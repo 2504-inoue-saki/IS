@@ -20,7 +20,7 @@ public class FilterConfig {
         FilterRegistrationBean<LoginFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new LoginFilter());
         //ログイン情報が必要なURL
-        bean.addUrlPatterns("/");
+        bean.addUrlPatterns("/IS/");
         bean.addUrlPatterns("/new");
         bean.addUrlPatterns("/signup");
         //*で全指定
