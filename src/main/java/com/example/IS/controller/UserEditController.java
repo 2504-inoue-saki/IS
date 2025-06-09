@@ -86,6 +86,7 @@ public class UserEditController {
     @PutMapping("/userEdit")
     public ModelAndView editUser(@Validated({EditGroup.class}) @ModelAttribute("editUser") UserForm editUser, BindingResult result) {
         ModelAndView mav = new ModelAndView();
+        HttpSession session = request.getSession();
         //エラーメッセージを入れる用のリストを作っておく
         List<String> errorMessages = new ArrayList<String>();
         //リクエストパラメータの必須＆文字数＆半角文字チェック（パスワード以外）
@@ -143,6 +144,10 @@ public class UserEditController {
             mav.setViewName("/userEdit");
             return mav;
         }
+
+        //もしログインユーザの部署IDが1の時
+        //→リクエストで取得した部署IDが1以外になっていたらOUT
+        //→フォワードで編集画面のエラーメッセージを表示
 
         //今の時間をセット
         LocalDateTime now = LocalDateTime.now();

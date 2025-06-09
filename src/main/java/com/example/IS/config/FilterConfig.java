@@ -25,6 +25,7 @@ public class FilterConfig {
         bean.addUrlPatterns("/signup");
         //*で全指定
         bean.addUrlPatterns("/userEdit/*");
+        //フィルターの優先順位
         bean.setOrder(1);
         return bean;
     }
